@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة اكتشاف الذات والمسار المهني</title>
+    <!-- Tailwind CSS للتصميم الجذاب -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- الخطوط العربية (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- شريط علوي -->
+    <header class="w-full py-6 px-8 border-b border-slate-800/60 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-black text-xl shadow-lg shadow-cyan-500/20">ر</div>
+            <span class="font-bold text-lg tracking-wide text-slate-200">بوصلة المستقبل المهني</span>
+        </div>
+        <span class="text-xs px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 font-medium">النسخة الاحترافية</span>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-6">
+        
+        <!-- 1. واجهة الترحيب -->
+        <div id="welcome-screen" class="max-w-2xl w-full text-center space-y-8 p-8 rounded-3xl glass-card shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="space-y-4">
+                <!-- اللوحة المطلوبة -->
+                <div class="inline-block px-6 py-2 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-500/30 text-cyan-400 font-bold text-sm tracking-wider uppercase mb-2">
+                    بوابة الاكتشاف الذاتي
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">
+                    استكشف ذاتك وانطلق لمستقبلك
+                </h1>
+                <p class="text-slate-400 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
+                    استقصاء نفسي ومهني دقيق مصمم خصيصاً لتحليل مهاراتك، هواياتك، وطبيعة تفكيرك، لنوجهك نحو المهن والمسارات الأكثر توافقاً مع شخصيتك.
+                </p>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-lg shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] transition-all duration-300">
+                ابدأ رحلة الاكتشاف الآن 🚀
+            </button>
+        </div>
+
+        <!-- 2. واجهة الأسئلة -->
+        <div id="quiz-screen" class="max-w-2xl w-full hidden space-y-6 p-6 sm:p-8 rounded-3xl glass-card shadow-2xl">
+            <!-- شريط التقدم -->
+            <div class="space-y-2">
+                <div class="flex justify-between text-xs text-slate-400 font-medium">
+                    <span id="question-progress">السؤال 1 من 6</span>
+                    <span id="progress-percent">16%</span>
+                </div>
+                <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-500 to-indigo-600 w-1/6 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- نص السؤال -->
+            <div class="min-h-[100px] flex items-center">
+                <h2 id="question-text" class="text-xl sm:text-2xl font-bold text-slate-100 leading-snug"></h2>
+            </div>
+
+            <!-- الخيارات -->
+            <div id="options-container" class="space-y-3">
+                <!-- سيتم تعبئتها ديناميكياً عبر الجافاسكريبت -->
+            </div>
+        </div>
+
+        <!-- 3. واجهة النتيجة والتحليل -->
+        <div id="result-screen" class="max-w-3xl w-full hidden space-y-8 p-6 sm:p-10 rounded-3xl glass-card shadow-2xl">
+            <div class="text-center space-y-3">
+                <div class="inline-flex p-3 rounded-2xl bg-cyan-500/10 text-cyan-400 mb-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h2 class="text-3xl font-black text-white">تحليل شخصيتك ومسارك المهني</h2>
+                <p class="text-slate-400 text-sm">بناءً على إجاباتك العميقة، تم مطابقة مهاراتك مع أفضل المهن المستقبلية:</p>
+            </div>
+
+            <!-- بطاقة النتيجة الرئيسية -->
+            <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/80 border border-slate-800 space-y-4">
+                <div class="flex items-center gap-4">
+                    <div id="result-icon" class="text-3xl p-3 bg-slate-800 rounded-xl">🎯</div>
+                    <div>
+                        <span class="text-xs text-cyan-400 font-semibold tracking-wider uppercase">الملف المهني الأساسي</span>
+                        <h3 id="result-title" class="text-2xl font-bold text-white"></h3>
+                    </div>
+                </div>
+                <p id="result-desc" class="text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-800/80 pt-4"></p>
+            </div>
+
+            <!-- الوظائف المقترحة بالتفصيل -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-slate-200 text-lg">المهن والوظائف المناسبة لك بدقة:</h4>
+                <div id="jobs-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- تعبئة ديناميكية -->
+                </div>
+            </div>
+
+            <div class="text-center pt-4">
+                <button onclick="resetQuiz()" class="px-8 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm transition-all border border-slate-700">
+                    إعادة الاختبار من جديد 🔄
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- تذييل -->
+    <footer class="w-full py-4 text-center text-xs text-slate-500 border-t border-slate-900">
+        جميع الحقوق محفوظة © 2026 | مصمم خصيصاً لاكتشاف الطاقات الكامنة
+    </footer>
+
+    <!-- منطق العمل (JavaScript) -->
+    <script>
+        const questions = [
+            {
+                text: "عندما تُواجه مشكلة معقدة أو تحدياً برمجياً/تقنياً، كيف تفضل التعامل معها؟",
+                options: [
+                    { text: "أقوم بتحليل الأرقام والبيانات ومنطق العمل بدقة للوصول للجذر", type: "tech_analyst" },
+                    { text: "أبحث عن حلول إبداعية وتصميم واجهات تجذب المستخدمين", type: "creative" },
+                    { text: "أخطط للمشروع بالكامل، أوزع المهام، وأدير الفريق لتنفيذه", type: "entrepreneur" },
+                    { text: "أفضل تفكيك العناصر وفهم كيف تعمل الأشياء تقنياً وهندسياً", type: "engineer" }
+                ]
+            },
+            {
+                text: "ما هو نوع النشاط أو الهواية التي تميل إليها وتجد متعة في قضاء وقتك فيها؟",
+                options: [
+                    { text: "تطوير الأدوات، بناء المواقع، أو كتابة السكربتات والبرمجيات", type: "tech_analyst" },
+                    { text: "الرسم، التصميم الجرافيكي، المونتاج وصناعة الهويات البصرية", type: "creative" },
+                    { text: "إدارة المشاريع التجارية، التسويق الإلكتروني، ودراسة الأسواق", type: "entrepreneur" },
+                    { text: "الاطلاع على التقنيات المتقدمة، صيانة الأنظمة، وحل الألغاز المنطقية", type: "engineer" }
+                ]
+            },
+            {
+                text: "ما هي البيئة العملية التي تشعر أنك ستنتج فيها بأقصى طاقة لديك؟",
+                options: [
+                    { text: "بيئة تعتمد على الأرقام والتحليل المستقل وحل المشكلات البرمجية", type: "tech_analyst" },
+                    { text: "بيئة مرنة تعج بالألوان والإبداع البصري والتعبير الفني", type: "creative" },
+                    { text: "بيئة استثمارية، قيادية، تتيح لي بناء مشروعي الخاص وتطويره", type: "entrepreneur" },
+                    { text: "بيئة منظمة تركز على الابتكار التقني والهندسي الدقيق", type: "engineer" }
+                ]
+            },
+            {
+                text: "أي من هذه المهارات تعتبرها أقرب لشخصيتك وتبرز فيها بشكل طبيعي؟",
+                options: [
+                    { text: "المنطق البرمجي، دقة الملاحظة، والتفكير التحليلي", type: "tech_analyst" },
+                    { text: "الذوق الجمالي، الابتكار التصميمي، واللمسات الفنية", type: "creative" },
+                    { text: "القدرة العالية على الإقناع، الإدارة، واقتناص الفرص التجارية", type: "entrepreneur" },
+                    { text: "القدرة على استيعاب الأنظمة المعقدة وهندستها وترتيبها", type: "engineer" }
+                ]
+            },
+            {
+                text: "ما هو هدفك المهني الأساسي الذي تسعى للوصول إليه في المستقبل القريب؟",
+                options: [
+                    { text: "أن أكون مطور برمجيات خبيراً أو محلل بيانات محترف", type: "tech_analyst" },
+                    { text: "أن أدير استوديو تصميم إبداعي أو أكون مصمماً ومبدعاً رقمياً مستقلاً", type: "creative" },
+                    { text: "أن أمتلك مشروعي الخاص الناجح وأدير منصة رقمية ذات عائد مالي", type: "entrepreneur" },
+                    { text: "أن أتقن التقنيات المتقدمة (كالذكاء الاصطناعي أو الأنظمة الذكية)", type: "engineer" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userScores = { tech_analyst: 0, creative: 0, entrepreneur: 0, engineer: 0 };
+
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const questionProgress = document.getElementById('question-progress');
+        const progressPercent = document.getElementById('progress-percent');
+        const progressBar = document.getElementById('progress-bar');
+
+        function startQuiz() {
+            welcomeScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            currentQuestion = 0;
+            userScores = { tech_analyst: 0, creative: 0, entrepreneur: 0, engineer: 0 };
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            questionText.textContent = q.text;
+            questionProgress.textContent = `السؤال ${currentQuestion + 1} من ${questions.length}`;
+            let percent = Math.round(((currentQuestion + 1) / questions.length) * 100);
+            progressPercent.textContent = percent + '%';
+            progressBar.style.width = percent + '%';
+
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-right p-4 rounded-xl bg-slate-900/60 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/50 transition-all text-slate-200 font-medium flex items-center justify-between group";
+                btn.innerHTML = `
+                    <span>${opt.text}</span>
+                    <span class="w-6 h-6 rounded-full border border-slate-700 group-hover:border-cyan-400 group-hover:bg-cyan-500/20 flex items-center justify-center text-xs text-transparent group-hover:text-cyan-400 transition-all">✓</span>
+                `;
+                btn.onclick = () => selectOption(opt.type);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(type) {
+            userScores[type]++;
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        const profiles = {
+            tech_analyst: {
+                icon: "💻",
+                title: "محلل بيانات ومطور أنظمة برمجية",
+                desc: "تتمتع بعقلية تحليلية عالية، وقدرة فائقة على تفكيك المشكلات البرمجية واستخراج النتائج بدقة متناهية. تميل بطبيعتك إلى بناء الأنظمة وهندسة الأكواد.",
+                jobs: ["مطور ويب ومطبيقات (Full-Stack Developer)", "محلل بيانات وخوارزميات (Data Analyst)", "مهندس جودة وبرمجيات (Software Engineer)", "مطور سكريبتات وأدوات ذكية"]
+            },
+            creative: {
+                icon: "🎨",
+                title: "مبدع بصري ومصمم هويات رقمية",
+                desc: "تمتلك حساً جمالياً وإبداعياً عالياً، وتستمتع بصناعة الهويات والواجهات والتجارب البصرية التي تخطف الأنفاس وتلامس ذائقة المستخدم.",
+                jobs: ["مصمم جرافيك وهويات بصرية (Brand Designer)", "مصمم واجهات وتجربة مستخدم (UI/UX Designer)", "منتج محتوى مرئي وإعلانات رقمية", "مؤسس استوديو تصميم إبداعي"]
+            },
+            entrepreneur: {
+                icon: "🚀",
+                title: "رائد أعمال ومؤسس مشاريع رقمية",
+                desc: "لديك حِس تجاري قيادي، وتفكير استراتيجي يتيح لك ربط الأفكار بالفرص السوقية، وإدارة المشاريع الإلكترونية وتحقيق العوائد بنجاح.",
+                jobs: ["مؤسس منصة تعليمية أو خدمية رقمية", "متخصص تجارة إلكترونية ودروبشوبينغ", "مسؤول تسويق رقمي وإدارة نمو (Growth Marketer)", "مستشار استراتيجي للمشاريع الناشئة"]
+            },
+            engineer: {
+                icon: "⚡",
+                title: "مهندس تقني وباحث تكنولوجي",
+                desc: "تستهويك البنى التحتية المتقدمة والتقنيات العميقة، وتميل إلى البحث المستمر وفهم كيف تعمل التكنولوجيا الحديثة من الكواليس.",
+                jobs: ["مختص تقنيات ذكاء اصطناعي ونماذج ذكية", "مهندس سحابي وإدارة خوادم (Cloud Engineer)", "باحث ومطور تقنيات متقدمة", "أخصائي أمن سيبراني وبنى تحتية"]
+            }
+        };
+
+        function showResult() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            // تحديد النتيجة الأعلى
+            let bestType = Object.keys(userScores).reduce((a, b) => userScores[a] > userScores[b] ? a : b);
+            let profile = profiles[bestType];
+
+            document.getElementById('result-icon').textContent = profile.icon;
+            document.getElementById('result-title').textContent = profile.title;
+            document.getElementById('result-desc').textContent = profile.desc;
+
+            let jobsContainer = document.getElementById('jobs-container');
+            jobsContainer.innerHTML = '';
+            profile.jobs.forEach(job => {
+                let div = document.createElement('div');
+                div.className = "p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 font-medium text-sm flex items-center gap-3";
+                div.innerHTML = `<span class="w-2 h-2 rounded-full bg-cyan-400"></span> ${job}`;
+                jobsContainer.appendChild(div);
+            });
+        }
+
+        function resetQuiz() {
+            resultScreen.classList.add('hidden');
+            welcomeScreen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
